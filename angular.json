@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "AdminCMS": {
@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "AdminCMS"
+    }
+  },
+  "defaultProject": "AdminCMS",
+  "cli": {
+    "analytics": "d96364b9-83ae-4e5a-bbcb-0a941e9c5545"
+  }
 }
