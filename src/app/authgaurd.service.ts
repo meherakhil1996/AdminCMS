@@ -6,6 +6,7 @@ import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/ro
 })
 export class AuthgaurdService {
 
+  public user:string = "";
   constructor(private router: Router) { }
 
   // Checks whether user is already logged in or not for a secured link. If not redirects to login page
@@ -17,5 +18,14 @@ export class AuthgaurdService {
     else{
       return true;
     }
+  }
+
+  public onLogout(){
+    sessionStorage.removeItem("AUTH_TOKEN")
+    this.router.navigate(["/login"])
+  }
+
+  public authUser(user:string){
+    this.user = user;
   }
 }

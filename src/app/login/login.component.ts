@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NavbarService } from '../navbar.service';
+import { AuthgaurdService } from '../authgaurd.service';
 import {url} from '../globals';
 
 
@@ -16,7 +18,8 @@ export class LoginComponent implements OnInit {
   public passkey: string = "";
   public result: string = "";
 
-  constructor(private httpObj: HttpClient, private router: Router, private route: ActivatedRoute) { }
+  constructor(private httpObj: HttpClient, private router: Router, private route: ActivatedRoute,
+    private nav: NavbarService, private auth: AuthgaurdService) { }
 
   ngOnInit(): void {
     let url1:string = url+'account';
@@ -32,11 +35,18 @@ export class LoginComponent implements OnInit {
       str = "/";
     }
 
-    if(this.user_data.find(item => item.username == this.uname)){
+    let user:boolean = this.user_data.find(item => item.username == this.uname);
+    let email:boolean = this.user_data.find(item => item.email == this.uname);
+    if(!user&&!email){
+      this.result = "Invalid Username/Email";
+      return false;
+    }
+    if(user){
       if(this.user_data.find(item => item.username == this.uname).password == this.passkey){
         sessionStorage.setItem("AUTH_TOKEN", this.uname);
-        console.log(url);
         this.router.navigate([str]);
+        this.nav.show();
+        this.auth.authUser(this.uname);
         return true;
       }
       else{
@@ -44,13 +54,18 @@ export class LoginComponent implements OnInit {
         return false;
       }
     }
-    else if(this.uname == ""){
-      this.result = "Enter Username";
-      return false;
-    }
-    else{
-      this.result = "User not found!";
-      return false;
+    if(email){
+      if(this.user_data.find(item => item.email == this.uname).password == this.passkey){
+        sessionStorage.setItem("AUTH_TOKEN", this.user_data.find(item => item.email == this.uname).username);
+        this.router.navigate([str]);
+        this.nav.show();
+        this.auth.authUser(this.user_data.find(item => item.email == this.uname).username);
+        return true;
+      }
+      else{
+        this.result = "Invalid Password";
+        return false;
+      }
     }
   }
 

@@ -1,0 +1,108 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="container">
+    <div class="col-12">
+        <form #signup = "ngForm" class="form" action="/registration.component.ts">
+            <div class="form-group">
+                <div class="col-3">
+                    <label for="fname">First Name*</label>
+                </div>
+                <div class="col-2">
+                    <span>:</span>
+                </div>
+                <div class="col-5">
+                    <input type="text" #t1="ngModel" name="fname" [(ngModel)]="fname" required/>
+                </div>
+                <div class="col-2">
+                    <span *ngIf = "t1.invalid && t1.dirty" class="errormsg"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        This is a required field</span>
+                </div>
+            </div> 
+            <div class="form-group">
+                <div class="col-3">
+                    <label for="lname">Last Name*</label>
+                </div>
+                <div class="col-2">
+                    <span>:</span>
+                </div>
+                <div class="col-5">
+                    <input type="text" #t2="ngModel" name="lname" [(ngModel)]="lname" required/>
+                </div>
+                <div class="col-2">
+                    <span *ngIf = "t2.invalid && t2.dirty" class="errormsg"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        This is a required field</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-3">
+                    <label for="email">Email*</label>
+                </div>
+                <div class="col-2">
+                    <span>:</span>
+                </div>
+                <div class="col-5">
+                    <input type="email" #t3="ngModel" name="email" [(ngModel)]="email" required/>
+                </div>
+                <div class="col-2">
+                    <span *ngIf = "t3.invalid && t3.dirty" class="errormsg"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        This is a required field</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-3">
+                    <label for="uname">Username*</label>
+                </div>
+                <div class="col-2">
+                    <span>:</span>
+                </div>
+                <div class="col-5">
+                    <input type="text" #t4="ngModel" name="uname" [(ngModel)]="uname" required/>
+                </div>
+                <div class="col-2">
+                    <span *ngIf = "t4.invalid && t4.dirty" class="errormsg">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        This is a required field
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-3">
+                    <label for="pwd">Password*</label>
+                </div>
+                <div class="col-2">
+                    <span>:</span>
+                </div>
+                <div class="col-5">
+                    <input type="text" #t5="ngModel" name="pwd" [(ngModel)]="pwd" required/>
+                </div>
+                <div class="col-2">
+                    <span *ngIf = "t5.invalid && t5.dirty" class="errormsg">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        Password must contain [('ABC');('abc');('123');('*@#$')]
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-3">
+                    <label for="cpwd">Confirm Password*</label>
+                </div>
+                <div class="col-2">
+                    <span>:</span>
+                </div>
+                <div class="col-5">
+                    <input type="text" #t6="ngModel" name="cpwd" [(ngModel)]="cpwd" required/>
+                </div>
+                <div class="col-2">
+                    <span *ngIf = "t6.invalid && t6.dirty" class="errormsg">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        Password doesn't match
+                    </span>
+                </div>
+            </div> 
+            <button type="submit" class="btn btn-primary rounded" (click)="signUp()">Submit</button>     
+        </form>
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
