@@ -32,7 +32,7 @@ export class ProductComponent implements OnInit {
     let url1 = url + "products/"+id;
   }
 
-  public deleteItem(){
+  public deleteItem(id:number){
 
   }
 

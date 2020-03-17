@@ -1,0 +1,56 @@
+
+  <div class="container-fluid">
+      <div class="col-12 mt-2">
+            <div class="d-flex justify-content-end">
+                <!-- <mat-form-field appearance="fill">
+                  <mat-label>Choose an option</mat-label>
+                  <mat-select [(ngModel)]="searchSelect">
+                    <mat-option value="id">ID</mat-option>
+                    <mat-option value="username">Username</mat-option>
+                    <mat-option value="email">Email</mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+                <mat-form-field appearance="fill" class="mx-1">
+                  <mat-label>Order ID</mat-label>
+                  <input matInput [(ngModel)]="searchTxt">
+                  <button mat-icon-button matSuffix (click)="search()">
+                    <mat-icon><i class="fa fa-search" aria-hidden="true"></i></mat-icon>
+                  </button>
+                </mat-form-field>
+            </div>
+      </div>
+      <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Order ID</th>
+              <th scope="col">Order Details</th>
+              <th scope="col">Total Amount</th> 
+              <th scope="col">Status</th> 
+              <th scope="col">Ordered Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor = "let item of orders;">
+              <th scope="row">{{item.order_id}}</th>
+              <td>
+                  <a href="javascript:void(0)" data-toggle="collapse" aria-expanded="false" aria-controls="orderDetControl">
+                    Order Details
+                  </a>
+              </td>
+              <td>{{item.total | currency:'INR'}}</td>
+              <td>{{item.status}}</td>
+              <td>{{item.order_date}}</td>
+              <div class="collapse" id="orderDetControl">
+                  <!-- <div *ngFor="let x of item.orderDetails; let i = index;">
+                      <span>{{x.product}} of {{item.products[i].quantity}}</span>
+                  </div> -->
+                  collapse
+              </div>
+            </tr>
+          </tbody>
+      </table>    
+  </div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+    <p style="color: white">Please Wait. </p>  
+</ngx-spinner> 

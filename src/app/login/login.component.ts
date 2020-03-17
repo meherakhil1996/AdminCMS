@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NavbarService } from '../navbar.service';
 import { AuthgaurdService } from '../authgaurd.service';
 import {url} from '../globals';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
   public uname: string = "";
   public passkey: string = "";
   public result: string = "";
+  public hide:boolean = true;
 
   constructor(private httpObj: HttpClient, private router: Router, private route: ActivatedRoute,
     private nav: NavbarService, private auth: AuthgaurdService) { }
@@ -68,5 +70,13 @@ export class LoginComponent implements OnInit {
       }
     }
   }
+
+  public pwdForm:FormGroup = new FormGroup({
+    pass: new FormControl(null, Validators.required)
+  });
+
+  public unameForm:FormGroup = new FormGroup({
+    usern: new FormControl(null, Validators.required)
+  })
 
 }

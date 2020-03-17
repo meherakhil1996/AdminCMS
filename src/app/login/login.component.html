@@ -8,7 +8,7 @@
                 <h1>Admin CMS</h1>
             </div>
             <div class="col-6 ml-1 formdiv" (keyup.enter)="onLogin()">
-                <form #userForm = "ngForm" action="" class="form my-2">
+                <!-- <form #userForm = "ngForm" action="" class="form my-2">
                     <div class="row">
                         <div class="col-3 form-group">
                             <label for="username">Username/Email</label>
@@ -39,7 +39,34 @@
                         <button class="btn btn-primary" (click) = "onLogin()">Login</button>
                     </div>
                     
-                </form>
+                </form> -->
+                <div class="row m-2">
+                    <mat-form-field appearance="fill" [formGroup]="unameForm">
+                        <mat-label>Username/Email</mat-label>
+                        <input matInput [(ngModel)] = "uname" formControlName="usern">
+                        <mat-error *ngIf="unameForm.controls.usern.dirty && unameForm.controls.usern.invalid">
+                            Enter Username/Email
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row m-2">
+                    <mat-form-field appearance="fill" [formGroup]="pwdForm">
+                        <mat-label>Enter your password</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="passkey" formControlName="pass">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="pwdForm.controls.pass.invalid && pwdForm.controls.pass.dirty">
+                            Enter Password
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <span>{{result}}</span>
+                </div>
+                <div class="text-right mb-3">
+                    <button class="btn btn-primary" (click) = "onLogin()">Login</button>
+                </div>
             </div>
         </div>
     </div>
