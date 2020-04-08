@@ -1,54 +1,54 @@
-<div class="example-container">
-  <mat-form-field appearance="fill">
-    <mat-label>Input</mat-label>
-    <input matInput>
-  </mat-form-field>
-  <br>
-  <mat-form-field appearance="fill">
-    <mat-label>Select</mat-label>
-    <mat-select>
-      <mat-option value="option">Option</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <br>
-  <mat-form-field appearance="fill">
-    <mat-label>Textarea</mat-label>
-    <textarea matInput></textarea>
-  </mat-form-field>
-</div>
 
 <div class="container-fluid">
-    <table class="table table-striped">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Product</th>
-            <th scope="col">Category</th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>    
-            <th scope="col">Publish</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor = "let item of products | slice:0:5;">
-            <th scope="row">{{item.id}}</th>
-            <td contenteditable="true">{{item.product}}</td>
-            <td contenteditable="true">{{item.category}}</td>
-            <td contenteditable="true">{{item.price | currency:'INR'}}</td>
-            <td contenteditable="true">{{item.stock}}</td>
-            <td>
-                <input type="checkbox" [checked]="item.publish"/>
-            </td>
-            <td>
-                <button class="btn btn-primary mx-1" (click)="saveDetails(item.id)">Save</button>
-                <button class="btn btn-danger btn-sm" (click)="deleteItem(item.id)">
-                    <span class="glyphicon glyphicon-minus">-</span>
-                </button>
-            </td>
-          </tr>
-        </tbody>
-    </table>    
+  <div class="col-12 my-2">
+    <div class="d-flex justify-content-end">
+      <mat-form-field appearance="fill">
+        <mat-label>Choose an option</mat-label>
+        <mat-select [(ngModel)]="searchSelect">
+          <mat-option value="productName">Product</mat-option>
+          <mat-option value="categoryName">Category</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="mx-1">
+        <mat-label>Search</mat-label>
+        <input matInput [(ngModel)]="searchTxt">
+        <button mat-icon-button matSuffix (click)="search()">
+          <mat-icon><i class="fa fa-search" aria-hidden="true"></i></mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+  <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Product</th>
+          <th scope="col">Category</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>    
+          <th scope="col">Publish</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor = "let item of products | slice:0:5;">
+          <th scope="row">{{item.id}}</th>
+          <td contenteditable="true">{{item.product}}</td>
+          <td contenteditable="true">{{item.category}}</td>
+          <td contenteditable="true">{{item.price | currency:'INR'}}</td>
+          <td contenteditable="true">{{item.stock}}</td>
+          <td>
+              <input type="checkbox" [checked]="item.publish"/>
+          </td>
+          <td>
+              <button class="btn btn-primary mx-1" (click)="saveDetails(item.id)">Save</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteItem(item.id)">
+                  <span class="glyphicon glyphicon-minus">-</span>
+              </button>
+          </td>
+        </tr>
+      </tbody>
+  </table>    
 </div>
 
 <!-- <ul>

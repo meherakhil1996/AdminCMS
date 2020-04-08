@@ -26,25 +26,28 @@ export class OrdersComponent implements OnInit {
     let url1:string = url+"orders";
     this.httpObj.get(url1).subscribe((response:any[]) => {
       this.orders = response;
-      this.getOrderDetails();
+      // this.getOrderDetails();
       this.spinner.hide();
     });
   }
 
-  public getOrderDetails(){
-    let url2 = url+"products/";
-    let i:number = 0;
-    this.orders.forEach(e => {
-      i=0;
-      e.products.forEach(element => {
-        this.httpObj.get(url2+ element.product_id).subscribe((response:any) => {
-          this.orders.find(item => item.order_id == e.order_id).orderDetails[i].push(response);
-          i += 1;
-        })
-      });
-    })
+  // public getOrderDetails(){
+  //   let url2 = url+"products/";
+  //   let i:number = 0;
+  //   let j:number = 0;
+  //   this.orders.forEach(e => {
+  //     i=0;
+  //     e.products.forEach(element => {
+  //       this.httpObj.get(url2+ element.product_id).subscribe((response:any) => {
+  //         this.orders.find(item => item.order_id == e.order_id).orderDetails[i].push(response);
+  //         i += 1;
+  //         console.log(this.orders[j].orderDetails[1])
+  //       })
+  //     });
+  //     j += 1;
+  //   })
     
-  }
+  // }
   
 
   public search(){

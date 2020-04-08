@@ -13,6 +13,9 @@ export class ProductComponent implements OnInit {
 
   public products:any[] = [];
   public bool:boolean = false;
+  public searchSelect:string = "";
+  public searchTxt:string = "";
+
   constructor(private httpObj : HttpClient, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
@@ -34,6 +37,10 @@ export class ProductComponent implements OnInit {
 
   public deleteItem(id:number){
 
+  }
+
+  public search(){
+    
   }
 
 }

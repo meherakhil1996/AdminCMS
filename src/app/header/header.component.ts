@@ -10,6 +10,7 @@ import { AuthgaurdService } from '../authgaurd.service';
 export class HeaderComponent implements OnInit {
 
   public user:string = "";
+  public searchTxt:string = "";
 
   constructor(public nav : NavbarService, private auth : AuthgaurdService) { }
 
@@ -26,6 +27,10 @@ export class HeaderComponent implements OnInit {
   public logout(){
     this.auth.onLogout();
     this.ngOnInit();
+  }
+
+  public search(){
+    
   }
 
 }

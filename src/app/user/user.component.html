@@ -1,61 +1,140 @@
-<div class="container">
+<div class="container-fluid">
   <div class="col-12 my-2">
-      <div class="d-flex justify-content-end">
-        <mat-form-field appearance="fill">
-          <mat-label>Choose an option</mat-label>
-          <mat-select [(ngModel)]="searchSelect">
-            <mat-option value="id">ID</mat-option>
-            <mat-option value="username">Username</mat-option>
-            <mat-option value="email">Email</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="fill" class="mx-1">
-          <mat-label>Search</mat-label>
-          <input matInput [(ngModel)]="searchTxt">
-          <button mat-icon-button matSuffix (click)="search()">
-            <mat-icon><i class="fa fa-search" aria-hidden="true"></i></mat-icon>
+    <div>
+      <button class="btn btn-primary" (click)="addRow()">Add User +</button>
+    </div>
+    <div class="d-flex justify-content-end">
+      <mat-form-field appearance="fill">
+        <mat-label>Choose an option</mat-label>
+        <mat-select [(ngModel)]="searchSelect">
+          <mat-option value="id">ID</mat-option>
+          <mat-option value="username">Username</mat-option>
+          <mat-option value="email">Email</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="mx-1">
+        <mat-label>Search</mat-label>
+        <input matInput [(ngModel)]="searchTxt">
+        <button mat-icon-button matSuffix (click)="search()">
+          <mat-icon><i class="fa fa-search" aria-hidden="true"></i></mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+  <div *ngIf="useradded" class="alert alert-success" role="alert">
+    {{result}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div *ngIf="usererror" class="alert alert-warning" role="alert">
+    {{result}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Username</th>
+        <th scope="col">Password</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">User Group</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="bool">
+        <td></td>
+        <td><input class="rounded" [(ngModel)]="uname"/></td>
+        <td><input class="rounded" [(ngModel)]="passkey"/></td>
+        <td><input class="rounded" [(ngModel)]="fname"/></td>
+        <td><input class="rounded" [(ngModel)]="lname"/></td>
+        <td><input class="rounded" [(ngModel)]="usermail" pattern="[a-z]@."/></td>
+        <td>
+          <mat-form-field>
+            <mat-label>Select Access</mat-label>
+            <select matNativeControl class="rounded" [(ngModel)]="uaccess">
+              <option *ngFor="let opt of userGroup" [ngValue]="opt.value">{{opt.accessType}}</option>
+            </select>
+          </mat-form-field>
+        </td>
+        <td>
+          <button class="btn btn-primary mx-1" (click)="addUser()">Save</button>
+          <button class="btn cancelbtn" (click)="cancelRow()">
+            <i class="fa fa-times" aria-hidden="true"></i>
           </button>
-        </mat-form-field>
+        </td>
+      </tr>
+      <tr *ngFor = "let item of userlist;">
+        <th scope="row">{{item.id}}</th>
+        <td contenteditable="true">{{item.username}}</td>
+        <td contenteditable="true">{{item.password}}</td>
+        <td contenteditable="true">{{item.firstname}}</td>
+        <td contenteditable="true">{{item.lastname}}</td>
+        <td contenteditable="true">{{item.email}}</td>
+        <td>
+          <!-- <select class="bootstrap-select rounded" [(ngModel)]="groupSelect">
+              <option *ngFor="let opt of userGroup" [ngValue]="opt.value" [selected]="item.access==opt.value">{{opt.accessType}}</option> 
+          </select> -->
+          <mat-form-field>
+            <select matNativeControl class="rounded">
+              <option *ngFor="let opt of userGroup" [ngValue]="opt.value" [selected]="item.access==opt.value">{{opt.accessType}}</option>
+            </select>
+          </mat-form-field>
+        </td>
+        <td>
+          <button class="btn btn-primary mx-1" data-toggle="modal" data-target="#savemodal" (click)="removeId(item.id)">Save</button>
+          <button class="btn text-danger delete" data-toggle="modal" data-target="#deletemodal" (click)="removeId(item.id)">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </button>
+        </td>
+  
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="modal fade" id="deletemodal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Remove User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-   
+      <div class="modal-body">
+        <p>Do you want to delete the user?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteItem()">Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
-<table class="table table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Username</th>
-      <th scope="col">Password</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">User Group</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor = "let item of userlist;">
-      <th scope="row">{{item.id}}</th>
-      <td contenteditable="true">{{item.username}}</td>
-      <td contenteditable="true">{{item.password}}</td>
-      <td contenteditable="true">{{item.firstname}}</td>
-      <td contenteditable="true">{{item.lastname}}</td>
-      <td>
-        <!-- <select class="bootstrap-select rounded" [(ngModel)]="groupSelect">
-            <option *ngFor="let opt of userGroup" [ngValue]="opt.value" [selected]="item.access==opt.value">{{opt.accessType}}</option> 
-        </select> -->
-        <mat-form-field>
-          <select matNativeControl class="rounded">
-            <option *ngFor="let opt of userGroup" [ngValue]="opt.value" [selected]="item.access==opt.value">{{opt.accessType}}</option>
-          </select>
-        </mat-form-field>
-      </td>
-      <td>
-        <button class="btn btn-primary mx-1" (click)="saveDetails(item.id)">Save</button>
-        <button class="btn btn-danger btn-sm" (click)="deleteItem(item.id)">
-            <span class="glyphicon glyphicon-minus">-</span>
-        </button>
-      </td>
 
-    </tr>
-  </tbody>
-</table>
+<div class="modal fade" id="savemodal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Changes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveDetails()">Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

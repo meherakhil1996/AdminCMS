@@ -3,10 +3,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { MatSelectModule } from '@angular/material/select';
-// import { MatFormFieldModule } from '@angular/material/form-field';
-// import { MatInputModule } from '@angular/material/input';
 import { ChartsModule } from 'ng2-charts';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 // import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppComponent } from './app.component';
@@ -22,6 +20,8 @@ import { UserComponent } from './user/user.component';
 import { ProductComponent } from './product/product.component';
 import { MaterialModule } from './material/material.module';
 import { OrdersComponent } from './orders/orders.component';
+import { ProductnamePipe } from './productname.pipe';
+import { ChatboxComponent } from './chatbox/chatbox.component';
 
 const appRoutes: Routes = [
   {path:"", component: DashboardComponent, canActivate:[AuthgaurdService]},
@@ -31,7 +31,10 @@ const appRoutes: Routes = [
   {path:"product", component: ProductComponent},
   {path:"orders", component: OrdersComponent},
   {path:"logout", component: LogoutComponent},
+  {path:"chat", component: ChatboxComponent}
 ]
+
+const config: SocketIoConfig = { url: 'http://localhost:8000', options: {} };
 
 @NgModule({
   declarations: [
@@ -43,7 +46,9 @@ const appRoutes: Routes = [
     HeaderComponent,
     UserComponent,
     ProductComponent,
-    OrdersComponent
+    OrdersComponent,
+    ProductnamePipe,
+    ChatboxComponent
   ],
   imports: [
     BrowserModule,
@@ -54,10 +59,8 @@ const appRoutes: Routes = [
     NgxSpinnerModule,
     BrowserAnimationsModule,
     MaterialModule,
-    // MatSelectModule,
-    // MatFormFieldModule,
-    // MatInputModule,
-    ChartsModule
+    ChartsModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]
