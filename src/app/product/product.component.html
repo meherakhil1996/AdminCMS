@@ -1,60 +1,40 @@
 
-<div class="container-fluid">
-  <div class="col-12 my-2">
-    <div class="d-flex justify-content-end">
-      <mat-form-field appearance="fill">
-        <mat-label>Choose an option</mat-label>
-        <mat-select [(ngModel)]="searchSelect">
-          <mat-option value="productName">Product</mat-option>
-          <mat-option value="categoryName">Category</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="mx-1">
-        <mat-label>Search</mat-label>
-        <input matInput [(ngModel)]="searchTxt">
-        <button mat-icon-button matSuffix (click)="search()">
-          <mat-icon><i class="fa fa-search" aria-hidden="true"></i></mat-icon>
-        </button>
-      </mat-form-field>
-    </div>
-  </div>
-  <table class="table table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Product</th>
-          <th scope="col">Category</th>
-          <th scope="col">Price</th>
-          <th scope="col">Quantity</th>    
-          <th scope="col">Publish</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor = "let item of products | slice:0:5;">
-          <th scope="row">{{item.id}}</th>
-          <td contenteditable="true">{{item.product}}</td>
-          <td contenteditable="true">{{item.category}}</td>
-          <td contenteditable="true">{{item.price | currency:'INR'}}</td>
-          <td contenteditable="true">{{item.stock}}</td>
-          <td>
-              <input type="checkbox" [checked]="item.publish"/>
-          </td>
-          <td>
-              <button class="btn btn-primary mx-1" (click)="saveDetails(item.id)">Save</button>
-              <button class="btn btn-danger btn-sm" (click)="deleteItem(item.id)">
-                  <span class="glyphicon glyphicon-minus">-</span>
-              </button>
-          </td>
-        </tr>
-      </tbody>
-  </table>    
+<div class="container-fluid prodTable mat-elevation-z8 pt-3">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Product">
+  </mat-form-field>
+  <table mat-table matSort [dataSource]='listData'>
+    <ng-container matColumnDef='id'>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef='let item'>{{item.id}}</td>
+    </ng-container>
+    <ng-container matColumnDef='product'>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+      <td mat-cell *matCellDef='let item'>{{item.product}}</td>
+    </ng-container>
+    <ng-container matColumnDef='category'>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+      <td mat-cell *matCellDef='let item'>{{item.category}}</td>
+    </ng-container>
+    <ng-container matColumnDef='stock'>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock</th>
+      <td mat-cell *matCellDef='let item'>{{item.stock}}</td>
+    </ng-container>
+    <ng-container matColumnDef='price'>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+      <td mat-cell *matCellDef='let item'>{{item.price}}</td>
+    </ng-container>
+    <ng-container matColumnDef='publish'>
+      <th mat-header-cell *matHeaderCellDef>Publish</th>
+      <td mat-cell *matCellDef='let item'><mat-checkbox [checked]='item.publish'></mat-checkbox></td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef='displayedColumns; sticky:true'></tr>
+    <tr mat-row *matRowDef = 'let row; columns: displayedColumns;'></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
 
-<!-- <ul>
-    <li *ngFor="let item of products | paginate:{itemsPerPage: 10, currentPage:p}"></li>
-</ul>
-<pagination-controls (pageChange)="p=$event"></pagination-controls> -->
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
     <p style="color: white">Please Wait. </p>  
 </ngx-spinner> 

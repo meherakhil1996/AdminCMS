@@ -1,0 +1,17 @@
+table{
+    width: 100%;
+}
+
+.mat-row:nth-child(even){
+    background-color: #f1f1f1;
+}
+
+th{
+    font-weight:bold;
+}
+
+.prodTable{
+    height: fit-content;
+    max-height: 500px;
+    overflow: auto;
+}

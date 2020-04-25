@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgxSpinnerService } from "ngx-spinner";
 import { url } from '../globals'
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-user',
@@ -26,7 +29,15 @@ export class UserComponent implements OnInit {
   public result:string = "";
   public userId:number = null;
 
+  listData:MatTableDataSource<any>;
+  displayedColumns:string[] = ['id', 'username', 'firstname', 'lastname', 'email', 'ugroup', 'active'];
+
+  @ViewChild(MatPaginator, {static:true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   constructor(private httpObj: HttpClient, private spinner:NgxSpinnerService) { }
+
+  
 
   ngOnInit(): void {
     this.getUsers();
@@ -44,8 +55,16 @@ export class UserComponent implements OnInit {
     let url1 = url + "account";
     this.httpObj.get(url1).subscribe((response:any[]) => {
       this.userlist = response;
+      this.listData = new MatTableDataSource(this.userlist);
+      this.listData.paginator = this.paginator;
+      this.listData.sort = this.sort;
       this.spinner.hide();
     });
+  }
+
+  public applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.listData.filter = filterValue.trim().toLowerCase();
   }
 
   public removeId(id:number){
@@ -54,7 +73,6 @@ export class UserComponent implements OnInit {
 
   public saveDetails(){
     let url1 = url+"account/"+this.userId;
-    
   }
 
   public deleteItem(){

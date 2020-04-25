@@ -4,3 +4,21 @@
 .cancelbtn:hover{
     transform: scale(1.5);
 }
+
+table{
+    width: 100%;
+}
+
+th{
+    font-weight:bold;
+}
+
+.userTable{
+    height: fit-content;
+    max-height: 500px;
+    overflow: auto;
+}
+
+.mat-row:nth-child(even){
+    background-color: #f1f1f1;
+}
